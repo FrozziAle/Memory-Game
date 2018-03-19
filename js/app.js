@@ -10,6 +10,16 @@ let cards = document.getElementsByClassName('card');
  *   - add each card's HTML to the page
  */
 
+//convert list into array from https://stackoverflow.com/questions/2735067/how-to-convert-a-dom-node-list-to-an-array-in-javascript
+let cardsArray = [];
+
+function toArray(obj) {
+  for (let i = 0; i < obj.length; i++) { 
+    cardsArray[i] = obj[i];
+  }
+  return cardsArray;
+}
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -32,7 +42,7 @@ function startGame() {
 	for (var i = 0; i < cards.length; i++){
 		deck.classList.remove('show', 'open', 'match');
 	}
-	cards = shuffle(cards);
+	cardsArray = shuffle(cardsArray);
 }
 
 //set up the event listener for a card
