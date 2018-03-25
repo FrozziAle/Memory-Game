@@ -38,15 +38,42 @@ function shuffle(array) {
 document.body.onload = startGame();
 
 function startGame() {
-	const deck = document.querySelector('.deck');
 	for (var i = 0; i < cards.length; i++){
-		deck.classList.remove('show', 'open', 'match');
+		cards[i].classList.remove('show', 'open', 'match');
 	}
 	cardsArray = shuffle(cardsArray);
+	cardsArray.forEach(function(e) {
+        deck.appendChild(e);
+    })
 }
 
 //set up the event listener for a card
+const deck = document.querySelector('.deck');
 deck.addEventListener('click', clickedCard);
+
+//if a card is clicked
+function clickedCard () {
+	displaySymbol ();
+	addToArray ();
+	moveCounter();
+	if (openedCards.length === 2) {
+		if (openedCards[0].type === openedCards[1].type) {
+			match();
+		} else {
+			unmatch ();
+		}
+	}
+}
+
+//display card's symbol
+function displaySymbol () {
+	for (let i = 0; i < cardsArray.length; i++) {
+		cardsArray[i].classList.add('open', 'show');
+	}
+}
+
+const restart = document.querySelector('.restart');
+restart.addEventListener('click',startGame);
 
 /*
  * set up the event listener for a card. If a card is clicked:
