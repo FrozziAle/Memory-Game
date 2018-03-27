@@ -2,6 +2,9 @@
  * Create a list that holds all of your cards
  */
 let cards = document.getElementsByClassName('card');
+const deck = document.querySelector('.deck');
+let moves = document.querySelector('.moves');
+let openedCards = [];
 
 /*
  * Display the cards on the page
@@ -9,7 +12,7 @@ let cards = document.getElementsByClassName('card');
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
+ 
 //convert list into array from https://stackoverflow.com/questions/2735067/how-to-convert-a-dom-node-list-to-an-array-in-javascript
 let cardsArray = [];
 
@@ -41,20 +44,23 @@ function startGame() {
 	for (var i = 0; i < cards.length; i++){
 		cards[i].classList.remove('show', 'open', 'match');
 	}
-	cardsArray = shuffle(cardsArray);
+	cards = shuffle(cards);
+	toArray(cards);
 	cardsArray.forEach(function(e) {
         deck.appendChild(e);
     })
 }
 
 //set up the event listener for a card
-const deck = document.querySelector('.deck');
 deck.addEventListener('click', clickedCard);
 
 //if a card is clicked
 function clickedCard () {
-	displaySymbol ();
-	addToArray ();
+	for (var i = 0; i < cards.length; i++){
+    card = cards[i];
+    card.addEventListener("click", displaySymbol);
+	}
+	addToArray();
 	moveCounter();
 	if (openedCards.length === 2) {
 		if (openedCards[0].type === openedCards[1].type) {
@@ -67,10 +73,40 @@ function clickedCard () {
 
 //display card's symbol
 function displaySymbol () {
-	for (let i = 0; i < cardsArray.length; i++) {
-		cardsArray[i].classList.add('open', 'show');
+	this.classList.toggle("open");
+    this.classList.toggle("show");
+}
+
+//add the card to a *list* of "open" cards
+
+function addToArray() {
+	if (openedCards.length < 2) {
+	openedCards.push(this);
 	}
 }
+
+//if cards match
+function match() {
+    openedCards[0].classList.add('match');
+    openedCards[1].classList.add('match');
+    openedCards[0].classList.remove('show', 'open');
+    openedCards[1].classList.remove('show', 'open');
+    openedCards = [];
+}
+
+//if cards don't match
+function unmatch() {
+	openedCards[0].classList.remove('show', 'open');
+    openedCards[1].classList.remove('show', 'open');
+    openedCards = [];
+}
+
+//increment move counter
+function moveCounter() {
+	moves ++;
+	moves.innerHTML = moves;
+}
+
 
 const restart = document.querySelector('.restart');
 restart.addEventListener('click',startGame);
