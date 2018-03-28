@@ -12,7 +12,7 @@ let openedCards = [];
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
- 
+
 //convert list into array from https://stackoverflow.com/questions/2735067/how-to-convert-a-dom-node-list-to-an-array-in-javascript
 let cardsArray = [];
 
@@ -44,21 +44,22 @@ function startGame() {
 	for (var i = 0; i < cards.length; i++){
 		cards[i].classList.remove('show', 'open', 'match');
 	}
-	cards = shuffle(cards);
 	toArray(cards);
+	shuffle(cardsArray);
 	cardsArray.forEach(function(e) {
         deck.appendChild(e);
     })
 }
 
 //set up the event listener for a card
-deck.addEventListener('click', clickedCard);
+for (let i of cardsArray) {
+	i.addEventListener('click',clickedCard(i))
+}
 
 //if a card is clicked
-function clickedCard () {
-	for (var i = 0; i < cards.length; i++){
-    card = cards[i];
-    card.addEventListener("click", displaySymbol);
+function clickedCard (card_val) {
+	return function(){
+		displaySymbol(card_val);
 	}
 	addToArray();
 	moveCounter();
