@@ -4,6 +4,7 @@
 let cards = document.getElementsByClassName('card');
 const deck = document.querySelector('.deck');
 let moves = document.querySelector('.moves');
+let countMoves = 0;
 let openedCards = [];
 
 /*
@@ -49,41 +50,44 @@ function startGame() {
 	cardsArray.forEach(function(e) {
         deck.appendChild(e);
     })
+    countMoves = 0;
+    moves.innerHTML = countMoves;
+
 }
 
 //set up the event listener for a card
 for (let i of cardsArray) {
-	i.addEventListener('click',clickedCard(i))
-}
+	i.addEventListener('click', function() {
+		clickedCard(this);
+		addToArray(this);
+		if (openedCards.length === 2) {
+			if (openedCards[0].type === openedCards[1].type) {
+				match();
+				moveCounter();
+			} else {
+				unmatch ();
+				moveCounter();
+			}
+		}
+	}
+)}
 
 //if a card is clicked
 function clickedCard (card_val) {
-	return function(){
 		displaySymbol(card_val);
-	}
-	addToArray();
-	moveCounter();
-	if (openedCards.length === 2) {
-		if (openedCards[0].type === openedCards[1].type) {
-			match();
-		} else {
-			unmatch ();
-		}
+}
+
+//add the card to a *list* of "open" cards
+function addToArray(card_val) {
+	if (openedCards.length < 2) {
+	openedCards.push(card_val);
 	}
 }
 
 //display card's symbol
-function displaySymbol () {
-	this.classList.toggle("open");
-    this.classList.toggle("show");
-}
-
-//add the card to a *list* of "open" cards
-
-function addToArray() {
-	if (openedCards.length < 2) {
-	openedCards.push(this);
-	}
+function displaySymbol (card_val) {
+	card_val.classList.toggle('open');
+    card_val.classList.toggle('show');
 }
 
 //if cards match
@@ -97,15 +101,17 @@ function match() {
 
 //if cards don't match
 function unmatch() {
-	openedCards[0].classList.remove('show', 'open');
-    openedCards[1].classList.remove('show', 'open');
-    openedCards = [];
+	setTimeout(function(){
+		openedCards[0].classList.remove('show', 'open');
+    	openedCards[1].classList.remove('show', 'open');
+    	openedCards = [];
+    }, 600);
 }
 
 //increment move counter
 function moveCounter() {
-	moves ++;
-	moves.innerHTML = moves;
+	countMoves +=1;
+	moves.innerHTML = countMoves;
 }
 
 
