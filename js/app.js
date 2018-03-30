@@ -5,6 +5,8 @@ let cards = document.getElementsByClassName('card');
 const deck = document.querySelector('.deck');
 let moves = document.querySelector('.moves');
 let countMoves = 0;
+let stars = document.querySelector('.stars');
+const star = '<li><i class="fa fa-star"></i></li>';
 let openedCards = [];
 
 /*
@@ -69,6 +71,7 @@ for (let i of cardsArray) {
 				moveCounter();
 			}
 		}
+		starsRating();
 	}
 )}
 
@@ -114,6 +117,17 @@ function moveCounter() {
 	moves.innerHTML = countMoves;
 }
 
+function starsRating() {
+	if (countMoves > 0 && countMoves < 12) {
+		stars.innerHTML = star.repeat(3);
+	}
+	else if (countMoves > 11 && countMoves < 18) {
+		stars.innerHTML = star.repeat(2);
+	}
+	else {
+		stars.innerHTML = star.repeat(1);
+	}
+}
 
 const restart = document.querySelector('.restart');
 restart.addEventListener('click',startGame);
