@@ -8,6 +8,11 @@ let countMoves = 0;
 let stars = document.querySelector('.stars');
 const star = '<li><i class="fa fa-star"></i></li>';
 let openedCards = [];
+let interval; 
+let min = 0;
+let sec = 0;
+let timer = document.querySelector('.timer');
+
 
 /*
  * Display the cards on the page
@@ -47,14 +52,15 @@ function startGame() {
 	for (var i = 0; i < cards.length; i++){
 		cards[i].classList.remove('show', 'open', 'match');
 	}
+	clearInterval(interval);
 	toArray(cards);
 	shuffle(cardsArray);
+	resetTimer();
 	cardsArray.forEach(function(e) {
         deck.appendChild(e);
     })
     countMoves = 0;
-    moves.innerHTML = countMoves;
-
+    moves.innerHTML = countMoves+' Moves';
 }
 
 //set up the event listener for a card
@@ -114,11 +120,15 @@ function unmatch() {
 //increment move counter
 function moveCounter() {
 	countMoves +=1;
-	moves.innerHTML = countMoves;
+	moves.innerHTML = countMoves+' Moves';
+	if (countMoves === 1) {
+		interval = setInterval (timeCounter,1000);
+		timeCounter();
+	}
 }
 
 function starsRating() {
-	if (countMoves > 0 && countMoves < 12) {
+	if (countMoves >= 0 && countMoves < 12) {
 		stars.innerHTML = star.repeat(3);
 	}
 	else if (countMoves > 11 && countMoves < 18) {
@@ -127,6 +137,20 @@ function starsRating() {
 	else {
 		stars.innerHTML = star.repeat(1);
 	}
+}
+
+function timeCounter(){
+	timer.innerHTML = 'Time '+min +':'+sec;
+	sec+=1;
+	if (sec === 60) {
+		min+=1;
+		sec = 0;
+	}
+}
+
+function resetTimer(){
+	clearInterval(timeCounter);
+	timer.innerHTML = 'Time 0:0';
 }
 
 const restart = document.querySelector('.restart');
