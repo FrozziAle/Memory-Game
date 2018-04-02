@@ -12,7 +12,7 @@ let interval;
 let min = 0;
 let sec = 0;
 let timer = document.querySelector('.timer');
-
+let matchedCard = document.getElementsByClassName('match');
 
 /*
  * Display the cards on the page
@@ -49,10 +49,12 @@ function shuffle(array) {
 document.body.onload = startGame();
 
 function startGame() {
+	document.getElementById('congrats').style.visibility = 'hidden';
+	resetTimer();
+	stars.innerHTML = star.repeat(3);
 	for (var i = 0; i < cards.length; i++){
 		cards[i].classList.remove('show', 'open', 'match');
 	}
-	clearInterval(interval);
 	toArray(cards);
 	shuffle(cardsArray);
 	resetTimer();
@@ -78,6 +80,7 @@ for (let i of cardsArray) {
 			}
 		}
 		starsRating();
+		endGame();
 	}
 )}
 
@@ -127,6 +130,8 @@ function moveCounter() {
 	}
 }
 
+
+//set stars rating
 function starsRating() {
 	if (countMoves >= 0 && countMoves < 12) {
 		stars.innerHTML = star.repeat(3);
@@ -139,6 +144,7 @@ function starsRating() {
 	}
 }
 
+//set time counter
 function timeCounter(){
 	timer.innerHTML = 'Time '+min +':'+sec;
 	sec+=1;
@@ -148,14 +154,28 @@ function timeCounter(){
 	}
 }
 
+//set reset timer
 function resetTimer(){
-	clearInterval(timeCounter);
+	clearInterval(interval);
 	timer.innerHTML = 'Time 0:0';
 }
 
 const restart = document.querySelector('.restart');
 restart.addEventListener('click',startGame);
 
+//show popup
+function endGame(){
+	timeStop = timer.innerHTML;
+	starsEnd = stars.innerHTML;
+
+	if (matchedCard.length === 16) {
+		clearInterval(interval);
+		document.getElementById('congrats').style.visibility = 'visible';
+		document.getElementById('stars').innerHTML = starsEnd;
+		document.getElementById('moves').innerHTML = countMoves + ' moves';
+		document.getElementById('timer').innerHTML = timeStop;
+	}
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
