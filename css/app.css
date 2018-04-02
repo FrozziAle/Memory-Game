@@ -26,11 +26,16 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 5px;
 }
 
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
+}
+
+header {
+    display: flex;
 }
 
 /*
@@ -69,6 +74,7 @@ h1 {
     transform: rotateY(0);
     background: #02b3e4;
     cursor: default;
+    pointer-events: none;
 }
 
 .deck .card.show {
@@ -79,6 +85,7 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+    pointer-events: none;
 }
 
 /*
@@ -109,3 +116,44 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+#congrats {
+    visibility: hidden;
+    position: absolute;
+    width: 500px;
+    height: 250px;
+    background: #cbccce;
+    margin: auto;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#stars {
+    display: inline-block;
+    list-style: none;
+}
+
+#stars li {
+    display: inline-block;
+}
+
+#restart {
+    font-size: 20px;
+}
+
+@media screen and (max-width: 700px) {
+    .deck {
+        width: 100%;
+        padding: 10px;
+        min-height: auto;
+    }
+    .deck .card {
+        width: 20vw;
+        height: 20vw;
+        margin: 1vw;
+    }
+    .score-panel {
+        width: 90%;
+    }
+}
+
