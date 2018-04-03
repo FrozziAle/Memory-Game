@@ -68,6 +68,7 @@ function startGame() {
 //set up the event listener for a card
 for (let i of cardsArray) {
 	i.addEventListener('click', function() {
+		if (openedCards.length >= 2) return;
 		clickedCard(this);
 		addToArray(this);
 		if (openedCards.length === 2) {
@@ -86,7 +87,7 @@ for (let i of cardsArray) {
 
 //if a card is clicked
 function clickedCard (card_val) {
-		displaySymbol(card_val);
+	displaySymbol(card_val);
 }
 
 //add the card to a *list* of "open" cards
