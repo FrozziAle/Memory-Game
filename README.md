@@ -7,14 +7,12 @@
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+Click on two cards and form all pairs!
 
-To get started, open `js/app.js` and start building out the app's functionality
+When you check the first pair, the timer starts and a move counter will increase in order to determine your stars rating.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+To get started, open `https://frozziale.github.io/Memory-Game/` and start playing.
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+The game is built using simple HTML, CSS and JavaScript.
