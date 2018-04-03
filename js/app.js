@@ -68,6 +68,10 @@ function startGame() {
 //set up the event listener for a card
 for (let i of cardsArray) {
 	i.addEventListener('click', function() {
+		if (min === 0 && sec === 0) {
+		interval = setInterval (timeCounter,1000);
+		timeCounter();			
+		}
 		if (openedCards.length >= 2) return;
 		clickedCard(this);
 		addToArray(this);
@@ -125,10 +129,6 @@ function unmatch() {
 function moveCounter() {
 	countMoves +=1;
 	moves.innerHTML = countMoves+' Moves';
-	if (countMoves === 1) {
-		interval = setInterval (timeCounter,1000);
-		timeCounter();
-	}
 }
 
 
@@ -157,6 +157,8 @@ function timeCounter(){
 
 //set reset timer
 function resetTimer(){
+	min = 0;
+	sec = 0;
 	clearInterval(interval);
 	timer.innerHTML = 'Time 0:0';
 }
